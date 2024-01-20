@@ -1,5 +1,12 @@
 <script setup>
+const props = defineProps({
+    carrito:{
+        type: Array,
+        required: true
+    }
+})
 
+defineEmits(['decrementar-cantidad', 'incrementar-cantidad', 'eliminar-producto'])
 </script>
 
 
@@ -19,8 +26,9 @@
                         <img class="img-fluid" src="https://res.cloudinary.com/dwrupo75d/image/upload/v1705707653/img/carrito_g3e5gn.png" alt="imagen carrito" />
 
                         <div id="carrito" class="bg-white p-3">
-                            <p class="text-center">El carrito esta vacio</p>
-                            <table class="w-100 table">
+                            <p v-if="carrito.length === 0" class="text-center">
+                                El carrito esta vacio</p>
+                            <table v-if="carrito.length > 0" class="w-100 table">
                                 <thead>
                                     <tr>
                                         <th>Imagen</th>
@@ -31,26 +39,31 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <tr
+                                        v-for="producto in carrito"
+                                    >
                                         <td>
-                                            <img class="img-fluid" src="https://res.cloudinary.com/dwrupo75d/image/upload/v1705707653/img/guitarra_02_hawhna.jpg" alt="imagen guitarra">
+                                            <img class="img-fluid" :src="producto.imagen" :alt="'imagen guitarra' + producto.nombre">
                                         </td>
-                                        <td>SRV</td>
+                                        <td>{{producto.nombre}}</td>
                                         <td class="fw-bold">
-                                                $299
+                                                ${{producto.precio}}
                                         </td>
                                         <td class="flex align-items-start gap-4">
                                             <button
                                                 type="button"
                                                 class="btn btn-dark"
+                                                @click="$emit('decrementar-cantidad', producto.id)"
                                             >
                                                 -
                                             </button>
-                                                1
+                                                {{producto.cantidad}}
                                             <button
                                                 type="button"
                                                 class="btn btn-dark"
-                                            >
+                                                @click="$emit('incrementar-cantidad', producto.id)"
+
+                                                >
                                                 +
                                             </button>
                                         </td>
@@ -58,6 +71,7 @@
                                             <button
                                                 class="btn btn-danger"
                                                 type="button"
+                                                @click="$emit('eliminar-producto', producto.id)"
                                             >
                                                 X
                                             </button>
@@ -66,7 +80,7 @@
                                 </tbody>
                             </table>
 
-                            <p class="text-end">Total pagar: <span class="fw-bold">$899</span></p>
+                            <p v-if="carrito.length > 0" class="text-end">Total pagar: <span class="fw-bold">$899</span></p>
                             <button class="btn btn-dark w-100 mt-3 p-2">Vaciar Carrito</button>
                         </div>
                     </div>
