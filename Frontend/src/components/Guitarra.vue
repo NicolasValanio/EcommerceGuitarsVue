@@ -5,6 +5,9 @@ const props = defineProps({
         required: true
     }
 })
+
+defineEmits(['agregar-carrito'])
+
 </script>
 
 
@@ -20,6 +23,7 @@ const props = defineProps({
                     <button 
                         type="button"
                         class="btn btn-dark w-100 "
+                        @click="$emit('agregar-carrito', guitarra)"
                     >Agregar al Carrito</button>
                 </div>
             </div><!-- FIN GUITARRA -->
