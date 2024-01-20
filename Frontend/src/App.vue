@@ -1,9 +1,9 @@
 <script setup>
-import {ref, reactive, onMounted } from 'vue'
+import {ref, onMounted } from 'vue'
 import {db} from '../../Backend/data.js'
-import Guitarra from './components/Guitarra.vue'
-import Header from './components/Header.vue'
-import Footer from './components/Footer.vue'
+import Guitarra from './components/Guitarra.vue/'
+import Header from './components/Header.vue/'
+import Footer from './components/Footer.vue/'
 
 const guitarras = ref([])
 const carrito = ref([])
@@ -39,9 +39,11 @@ const eliminarProducto = (id) =>{
     carrito.value = carrito.value.filter(producto => producto.id !== id);
  }
 
+const eliminarProductos= () =>{
+    carrito.value = []
+}
 
 </script>
-
 
 <template >
 
@@ -50,6 +52,7 @@ const eliminarProducto = (id) =>{
     @incrementar-cantidad="incrementarCantidad"
     @decrementar-cantidad="decrementarCantidad"
     @eliminar-producto="eliminarProducto"
+    @eliminar-productos="eliminarProductos"
     />
     <main class="container-xl mt-5">
         <h2 class="text-center">Nuestra Colección</h2>

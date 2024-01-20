@@ -6,7 +6,7 @@ const props = defineProps({
     }
 })
 
-defineEmits(['decrementar-cantidad', 'incrementar-cantidad', 'eliminar-producto'])
+defineEmits(['decrementar-cantidad', 'incrementar-cantidad', 'eliminar-producto','eliminar-productos'])
 </script>
 
 
@@ -81,7 +81,9 @@ defineEmits(['decrementar-cantidad', 'incrementar-cantidad', 'eliminar-producto'
                             </table>
 
                             <p v-if="carrito.length > 0" class="text-end">Total pagar: <span class="fw-bold">$899</span></p>
-                            <button class="btn btn-dark w-100 mt-3 p-2">Vaciar Carrito</button>
+                            <button 
+                            @click="$emit('eliminar-productos')"
+                            class="btn btn-dark w-100 mt-3 p-2">Vaciar Carrito</button>
                         </div>
                     </div>
                 </nav>
