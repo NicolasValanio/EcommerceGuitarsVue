@@ -25,7 +25,6 @@ const decrementarCantidad = (id) => {
     const index = carrito.value.findIndex(producto => producto.id === id)
     if( carrito.value[index].cantidad <= 1 ) return
         carrito.value[index].cantidad--
-    
 
 }
 
@@ -36,8 +35,10 @@ const incrementarCantidad = (id) => {
 }
 
 const eliminarProducto = (id) =>{
-  
-}
+    // crear un nuevo array sin el producto que tiene el id proporcionado
+    carrito.value = carrito.value.filter(producto => producto.id !== id);
+ }
+
 
 </script>
 
