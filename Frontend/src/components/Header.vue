@@ -1,12 +1,21 @@
 <script setup>
+import {computed} from 'vue'
 const props = defineProps({
     carrito:{
+        type: Array,
+        required: true
+    },
+    guitarra:{
         type: Array,
         required: true
     }
 })
 
-defineEmits(['decrementar-cantidad', 'incrementar-cantidad', 'eliminar-producto','eliminar-productos'])
+defineEmits(['decrementar-cantidad', 'incrementar-cantidad', 'eliminar-producto','eliminar-productos', 'agregar-carrito'])
+
+const totalPagar =computed(()=>{
+    return props.carrito.reduce((total, producto) => total + (producto.cantidad * producto.precio),0)
+})
 </script>
 
 
@@ -80,7 +89,7 @@ defineEmits(['decrementar-cantidad', 'incrementar-cantidad', 'eliminar-producto'
                                 </tbody>
                             </table>
 
-                            <p v-if="carrito.length > 0" class="text-end">Total pagar: <span class="fw-bold">$899</span></p>
+                            <p v-if="carrito.length > 0" class="text-end">Total pagar: <span class="fw-bold">${{ totalPagar }}</span></p>
                             <button 
                             @click="$emit('eliminar-productos')"
                             class="btn btn-dark w-100 mt-3 p-2">Vaciar Carrito</button>
@@ -91,10 +100,11 @@ defineEmits(['decrementar-cantidad', 'incrementar-cantidad', 'eliminar-producto'
 
             <div class="row mt-5">
                 <div class="col-md-6 text-center text-md-start pt-5">
-                    <h1 class="display-2 fw-bold">Modelo VAI</h1>
-                    <p class="mt-5 fs-5 text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus, possimus quibusdam dolor nemo velit quo, fuga omnis, iure molestias optio tempore sint at ipsa dolorum odio exercitationem eos inventore odit.</p>
-                    <p class="text-primary fs-1 fw-black">$399</p>
+                    <h1 class="display-2 fw-bold">MODELO {{guitarra.nombre }}</h1>
+                    <p class="mt-5 fs-5 text-white">{{guitarra.descripcion}}</p>
+                    <p class="text-primary fs-1 fw-black">${{guitarra.precio}}</p>
                     <button 
+                        @click="$emit('agregar-carrito',guitarra)"
                         type="button"
                         class="btn fs-4 bg-primary text-white py-2 px-5"
                     >Agregar al Carrito</button>
