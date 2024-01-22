@@ -1,20 +1,20 @@
 <script setup>
 import {computed} from 'vue'
 const props = defineProps({
-    carrito:{
-        type: Array,
-        required: true
-    },
-    guitarra:{
-        type: Array,
-        required: true
-    }
+  carrito:{
+    type: Array,
+    required: true
+  },
+  guitarra:{
+    type: Array,
+    required: true
+  }
 })
 
 defineEmits(['decrementar-cantidad', 'incrementar-cantidad', 'eliminar-producto','eliminar-productos', 'agregar-carrito'])
 
 const totalPagar =computed(()=>{
-    return props.carrito.reduce((total, producto) => total + (producto.cantidad * producto.precio),0)
+  return props.carrito.reduce((total, producto) => total + (producto.cantidad * producto.precio),0)
 })
 </script>
 
@@ -48,9 +48,7 @@ const totalPagar =computed(()=>{
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr
-                                        v-for="producto in carrito"
-                                    >
+                                    <tr v-for="producto in carrito" >
                                         <td>
                                             <img class="img-fluid" :src="producto.imagen" :alt="'imagen guitarra' + producto.nombre">
                                         </td>

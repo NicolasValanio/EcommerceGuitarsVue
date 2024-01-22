@@ -1,9 +1,9 @@
 <script setup>
 const props = defineProps({
-    guitarra: {
-        type: Object,
-        required: true
-    }
+  guitarra: {
+    type: Object,
+    required: true
+  }
 })
 
 defineEmits(['agregar-carrito'])
