@@ -88,6 +88,7 @@ const totalPagar =computed(()=>{
                             </table>
                             <div class="d-flex " >
                                 <button  v-if="carrito.length > 0"
+                                    id="btnvaciarcarrito"
                                 @click="$emit('eliminar-productos')"
                                 class="btn btn-dark w-50 mt-3 p-2">Vaciar Carrito</button>
                                 <p v-if="carrito.length > 0" class="text-center fs-5 pt-0">Total pagar: <span class="fw-bold">${{ totalPagar }}</span></p>

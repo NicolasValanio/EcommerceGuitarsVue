@@ -812,3 +812,17 @@ button:not(:disabled),
     z-index: 10;
   }
 }
+/* @media(max-width:280px) {
+    .carrito{
+      position:absolute;
+      padding: auto;
+    }
+    #carrito{
+      width: fit-content;
+    }
+    th,td{
+      width: fit-content;
+      font-size: 16px;
+    }
+    
+} */

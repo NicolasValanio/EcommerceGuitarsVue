@@ -11,6 +11,16 @@ const guitarras = ref([])
 const carrito = ref([])
 const guitarra = ref([])
 
+onMounted(() =>{
+  guitarras.value = db
+  guitarra.value = db[3]
+
+  const carritoStorage = localStorage.getItem('carrito')
+  if(carritoStorage){
+    carrito.value = JSON.parse(carritoStorage)
+  }
+})
+
 const NotiAgg=(()=>{
   toast.success('Producto añadido al carrito',{
     autoClose:1500,
@@ -67,16 +77,6 @@ watch(carrito, ()=>{
   guardarLocalStorage()
 },{
   deep: true
-})
-
-onMounted(() =>{
-  guitarras.value = db
-  guitarra.value = db[3]
-
-  const carritoStorage = localStorage.getItem('carrito')
-  if(carritoStorage){
-    carrito.value = JSON.parse(carritoStorage)
-  }
 })
 
 // fnc que guarda el carrito atravez del JSON 
