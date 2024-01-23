@@ -21,9 +21,10 @@
 
 > [!IMPORTANT]
 > Manejo de maximos permitidos y errores.
-> 
+
 > [![Captura-de-pantalla-2024-01-23-135818.png](https://i.postimg.cc/KjjgNN5b/Captura-de-pantalla-2024-01-23-135818.png)](https://postimg.cc/64s36CSb)
->
+
+
 > [![Captura-de-pantalla-2024-01-23-135947.png](https://i.postimg.cc/L4QPscH8/Captura-de-pantalla-2024-01-23-135947.png)](https://postimg.cc/hhxvy3zk)
 >
 > 
