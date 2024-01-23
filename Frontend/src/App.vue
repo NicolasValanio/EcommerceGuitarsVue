@@ -4,11 +4,64 @@ import {db} from '../../Backend/data.js'
 import Guitarra from './components/Guitarra.vue/'
 import Header from './components/Header.vue/'
 import Footer from './components/Footer.vue/'
+import {toast} from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
 const guitarras = ref([])
 const carrito = ref([])
 const guitarra = ref([])
 
+const NotiAgg=(()=>{
+  toast.success('Producto añadido al carrito',{
+    autoClose:1500,
+    position: toast.POSITION.BOTTOM_RIGHT,
+    theme: 'dark'
+  })
+})
+//funcion para notificacion
+const NotiError=(()=>{
+  toast.error('Alcanzaste el maximo permitido por producto',{
+    autoClose:3000,
+    position: toast.POSITION.BOTTOM_RIGHT,
+    theme: 'dark'
+  })
+})
+  
+const NotiBorrarCarrito = () => {
+  const resolveWithSomeData = new Promise((resolve, reject) => setTimeout(() => resolve({ message: 'Articulos eliminados' }), 2000))
+  toast.promise(
+    resolveWithSomeData,
+    {
+      pending: {
+        render() {
+          return 'Eliminando articulos'
+        },
+        // other options
+        icon: false,
+      },
+      success: {
+        render(res) {
+          return res.data.message
+        },
+        // other options
+        icon: '👌',
+      },
+      error: {
+        render(err) {
+          // When the promise reject, data will contains the error
+          return ('div', 'Err: ' + err.data.message)
+          // return 'Err: ' + err.data.message;
+        },
+        // render: 'just text',
+        // render: h('div', 'error'),
+      },
+    },
+    {
+      position: toast.POSITION.BOTTOM_RIGHT,
+      theme: 'dark'
+    }
+  )
+}
 // revisa constantemente los cambios que haya en la pagina y los guarda en el localstorage
 watch(carrito, ()=>{
   guardarLocalStorage()
@@ -32,12 +85,23 @@ const guardarLocalStorage =() =>{
 }
 
 const agregarCarrito = (guitarra) => {
+  if (guitarra.cantidad >=5) {
+    NotiError()
+    console.log(guitarra.cantidad)
+    return
+  }
   const existeCarrito = carrito.value.findIndex(producto => producto.id === guitarra.id)
   if(existeCarrito >= 0){
     carrito.value[existeCarrito].cantidad++
+    NotiAgg()
+  
+
   } else{
     guitarra.cantidad = 1
     carrito.value.push(guitarra)
+    NotiAgg()
+
+    
   }
 }
 
@@ -50,8 +114,13 @@ const decrementarCantidad = (id) => {
 
 const incrementarCantidad = (id) => {
   const index = carrito.value.findIndex(producto => producto.id === id)
-  if( carrito.value[index].cantidad >=5 ) return
-  carrito.value[index].cantidad++
+  if( carrito.value[index].cantidad >=5 ){
+    // Notifica error y se sale
+    NotiError()
+    return
+  }else { 
+    carrito.value[index].cantidad++
+  }
 }
 
 const eliminarProducto = (id) =>{
@@ -59,9 +128,14 @@ const eliminarProducto = (id) =>{
   carrito.value = carrito.value.filter(producto => producto.id !== id)
 }
 
-const eliminarProductos= () =>{
-  carrito.value = []
+const eliminarProductos = () => {
+  carrito.value.forEach(producto => {
+    producto.cantidad = 0 // Reiniciar la cantidad a cero
+  })
+  carrito.value = [] // Vaciar el carrito
+  NotiBorrarCarrito()
 }
+
 
 </script>
 
@@ -83,6 +157,7 @@ const eliminarProductos= () =>{
             v-for="guitarra in guitarras"
             :guitarra="guitarra"
             @agregar-carrito="agregarCarrito"
+            @noti="NotificacionAgg"
             />
         </div>
     </main>
